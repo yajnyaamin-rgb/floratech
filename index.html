@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FloraTech Mumbai – Empower first, Simplify next</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+
+<!-- ═══════════════════════════════════════
+     PAGE 1: AUTH / LOGIN
+═══════════════════════════════════════ -->
+<div id="s-auth" class="screen on">
+  <div class="auth-blobs"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+  <div class="auth-panel">
+    <div class="auth-brand">
+      <div class="logo-mark">
+  <img src="images/logo.jpeg" alt="FloraTech Logo">
+</div>
+      <h1>FloraTech</h1>
+      <p>A Tree Plantation Platform</p>
+      <div class="mumbai-tag">📍 Mumbai</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</div>
+      <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</div>
+    </div>
+    <!-- LOGIN FORM -->
+    <div id="form-login">
+      <div class="auth-err" id="login-err"></div>
+      <div class="fld"><label>Username</label><input type="text" id="l-user" placeholder="Enter username"></div>
+      <div class="fld"><label>Password</label><input type="password" id="l-pass" placeholder="Enter password"></div>
+      <div class="fld"><label>Role</label>
+        <select id="l-role">
+          <option value="">— Select Role —</option>
+          <option value="citizen"> Citizen</option>
+          <option value="admin"> Admin</option>
+        </select>
+      </div>
+      <button class="btn-auth" onclick="doLogin()">Sign In →</button>
+    </div>
+    <!-- REGISTER FORM -->
+    <div id="form-register" style="display:none">
+      <div class="auth-err" id="reg-err"></div>
+      <div class="auth-ok" id="reg-ok"></div>
+      <div class="fld"><label>Full Name</label><input type="text" id="r-name" placeholder="Your full name"></div>
+      <div class="fld"><label>Username</label><input type="text" id="r-user" placeholder="Choose username"></div>
+      <div class="fld"><label>Email</label><input type="email" id="r-email" placeholder="your@email.com"></div>
+      <div class="fld"><label>Password</label><input type="password" id="r-pass" placeholder="Min. 6 characters"></div>
+      <div class="fld"><label>Mumbai Area / Ward</label>
+        <select id="r-addr">
+          <option value="">— Select Area —</option>
+          <option>Andheri</option><option>Bandra</option><option>Borivali</option>
+          <option>Chembur</option><option>Dadar</option><option>Dharavi</option>
+          <option>Ghatkopar</option><option>Goregaon</option><option>Juhu</option>
+          <option>Kandivali</option><option>Kurla</option><option>Malad</option>
+          <option>Mulund</option><option>Powai</option><option>Thane (nearby)</option>
+          <option>Versova</option><option>Vikhroli</option><option>Worli</option>
+        </select>
+      </div>
+      <div class="fld"><label>Phone</label><input type="tel" id="r-phone" placeholder="10-digit number"></div>
+      <button class="btn-auth" onclick="doRegister()">Create Account →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE 2: DASHBOARD (all sections inside)
+═══════════════════════════════════════ -->
+<div id="s-dash" class="screen">
+  <div class="dash-inner" style="width:100%">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="logo-row">
+        <div class="sb-logo-box" style="font-size:1.4rem;background:linear-gradient(135deg,var(--g3),var(--g5));border-radius:9px;width:38px;height:38px;display:flex;align-items:center;justify-content:center"><img src="images/logo.jpeg" alt="FloraTech Logo"></div>
+        <div><h2>FloraTech</h2><span>Digital Green Initiative</span></div>
+      </div>
+      <div class="sb-mumbai">📍 Mumbai</div>
+    </div>
+    <nav class="sb-nav" id="sb-nav"></nav>
+    <div class="sb-user">
+      <div class="user-chip">
+        <div class="user-av" id="sb-av">U</div>
+        <div><div class="user-n" id="sb-name">User</div><div class="user-r" id="sb-role">citizen</div></div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">🚪 Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1 id="pg-title">Dashboard</h1>
+        <p id="pg-sub">Welcome back to FloraTech</p>
+      </div>
+      <div class="topbar-right" id="topbar-actions"></div>
+    </div>
+
+    <div class="content">
+
+      <!-- ════════════════════
+           SECTION: HOME (Dashboard)
+           Shows: stats, weather, carbon summary, plantations, feedback
+      ════════════════════ -->
+      <div class="section on" id="sec-home">
+        <div class="stats-row" id="home-stats"></div>
+        <div class="grid2">
+          <div>
+            <!-- Weather Widget -->
+            <div class="wx-card" id="wx-card">
+              <div class="wx-top">
+                <div>
+                  <div class="wx-temp" id="wx-temp">—</div>
+                  <div class="wx-desc" id="wx-desc">Loading…</div>
+                  <div class="wx-city" id="wx-city"></div>
+                </div>
+                <div class="wx-ico" id="wx-ico">🌤️</div>
+              </div>
+              <div class="wx-pills">
+                <div class="wx-pill"><strong id="wx-hum">—</strong>Humidity</div>
+                <div class="wx-pill"><strong id="wx-wind">—</strong>Wind</div>
+                <div class="wx-pill"><strong id="wx-uv">—</strong>UV Index</div>
+              </div>
+              <div class="aqi-strip">
+                <div class="aqi-dot" id="aqi-dot" style="background:#4caf50"></div>
+                <span id="aqi-txt">AQI Loading…</span>
+              </div>
+            </div>
+            <!-- Carbon Overview -->
+            <div class="card">
+              <div class="card-hd"><span class="card-title">📊 Carbon Overview</span></div>
+              <div id="home-carbon"></div>
+            </div>
+          </div>
+          <div>
+            <!-- My Plantations (inline on dashboard) -->
+            <div class="card">
+              <div class="card-hd">
+                <span class="card-title">🌳 My Plantations</span>
+                <button class="btn btn-sm btn-primary" onclick="openM('m-plant')">+ Log Tree</button>
+              </div>
+              <div id="home-plant-list"></div>
+            </div>
+            <!-- Community Feedback -->
+            <div class="card">
+              <div class="card-hd"><span class="card-title">💬 Community Feedback</span></div>
+              <div id="feedback-write-box">
+                <div class="fgroup">
+                  <textarea class="finput" id="fb-txt" placeholder="Share your green story, plantation experience or eco tips for Mumbai…" style="min-height:68px"></textarea>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="addFeedback()">🌿 Post Feedback</button>
+                <div style="height:14px"></div>
+              </div>
+              <div id="feedback-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════
+           SECTION: CARBON DASHBOARD
+      ════════════════════ -->
+      <div class="section" id="sec-carbon">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-hd"><span class="card-title">🌡️ My Carbon Dashboard</span></div>
+            <div class="carbon-big">
+              <div class="carbon-num" id="co2-big">0</div>
+              <div class="carbon-unit">kg CO₂ Offset</div>
+            </div>
+            <div id="carbon-mini-stats"></div>
+
+          </div>
+          <div class="card">
+            <div class="card-hd"><span class="card-title">📊 Breakdown & Progress</span></div>
+            <div id="carbon-bars"></div>
+            <div class="card" style="margin-top:14px;padding:14px">
+              <div class="card-hd" style="margin-bottom:11px"><span class="card-title" style="font-size:.97rem">🏆 Mumbai Leaderboard</span></div>
+              <div id="co2-leaderboard"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════
+           SECTION: GREEN EVENTS
+      ════════════════════ -->
+      <div class="section" id="sec-events">
+        <div class="card">
+          <div class="card-hd">
+            <div>
+              <span class="card-title">📅 Green Events – Mumbai</span>
+              <div class="card-sub">Community plantation drives, workshops & eco-initiatives</div>
+            </div>
+            <div id="event-add-btn"></div>
+          </div>
+          <div id="events-list"></div>
+        </div>
+      </div>
+
+      <!-- ════════════════════
+           SECTION: SHOP
+      ════════════════════ -->
+      <div class="section" id="sec-shop">
+        <div class="shop-hero">
+          <div>
+            <h2>🪴 Plant Shopping Mart</h2>
+            <p>Buy certified saplings, tools & eco-products · Mumbai delivery · Free on ₹500+</p>
+          </div>
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3)" onclick="goSec('orders')">📦 My Orders</button>
+        </div>
+
+        <!-- Admin: Add Product with Image Upload -->
+        <div class="admin-add-section" id="shop-admin-add" style="display:none">
+          <div class="admin-add-title">🛡️ Admin: Add New Product</div>
+          <div class="grid3">
+            <div class="fgroup"><label>Product Name</label><input class="finput" id="sp-name" placeholder="e.g. Tulsi Plant"></div>
+            <div class="fgroup"><label>Category</label>
+              <select class="finput" id="sp-cat">
+                <option value="indoor">🪴 Indoor Plant</option>
+                <option value="outdoor">🌳 Outdoor Tree</option>
+                <option value="medicinal">🌿 Medicinal Herb</option>
+                <option value="fruit">🍋 Fruit Tree</option>
+                <option value="flowering">🌸 Flowering Plant</option>
+                <option value="compost">🪱 Compost / Soil</option>
+                <option value="tools">⛏️ Gardening Tools</option>
+              </select>
+            </div>
+            <div class="fgroup"><label>Price (₹)</label><input class="finput" type="number" id="sp-price" placeholder="e.g. 299" min="1"></div>
+          </div>
+          <div class="grid2" style="margin-top:0">
+            <div class="fgroup">
+              <label>Image URL <span style="font-size:.72rem;color:var(--txt3)">(optional — paste a web or local path)</span></label>
+              <input type="text" class="finput" id="sp-img" placeholder="e.g. images/tulsi.jpg or https://...">
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="fgroup">
+              <label>Product Image (from Gallery)</label>
+              <div class="img-upload-box" id="sp-img-box">
+                <input type="file" id="sp-img-file" accept="images/*" onchange="previewProductImage(this)">
+                <div class="upload-ico">📷</div>
+                <div class="upload-txt">Click to upload image from gallery</div>
+              </div>
+            </div>
+            <div class="fgroup"><label>Short Description</label><input class="finput" id="sp-desc" placeholder="Brief product description"></div>
+          </div>
+          <button class="btn btn-primary" onclick="addShopItem(); return false;">
+  🌱 Add to Marketplace
+</button>
+          <span id="sp-upload-note" style="font-size:.72rem;color:var(--txt3);margin-left:10px"></span>
+        </div>
+
+        <div class="shop-toolbar">
+          <input class="shop-search" type="text" id="sh-search" placeholder="🔍 Search plants, tools, compost…" oninput="renderShop()">
+
+          <select class="shop-select" id="sh-cat" onchange="renderShop()">
+            <option value="">All Categories</option>
+            <option value="indoor">🪴 Indoor</option>
+            <option value="outdoor">🌳 Outdoor</option>
+            <option value="medicinal">🌿 Medicinal</option>
+            <option value="fruit">🍋 Fruit</option>
+            <option value="flowering">🌸 Flowering</option>
+            <option value="compost">🪱 Compost</option>
+            <option value="tools">⛏️ Tools</option>
+          </select>
+        </div>
+        <div class="shop-layout">
+          <div class="products-grid" id="products-grid"></div>
+          <div class="cart-panel">
+            <div class="cart-hd"><h3>🛒 Cart</h3><span class="cart-cnt" id="cart-badge">0</span></div>
+            <div class="cart-body" id="cart-body"><div class="cart-empty-msg">Your cart is empty 🌱</div></div>
+            <div class="cart-foot" id="cart-foot" style="display:none">
+              <div class="cart-total-row">
+                <span class="cart-total-lbl">Total Amount</span>
+                <span class="cart-total-val" id="cart-total">₹0</span>
+              </div>
+              <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="openCheckout()">Checkout →</button>
+              <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:5px" onclick="clearCart()">Clear Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════
+           SECTION: MY ORDERS
+      ════════════════════ -->
+      <div class="section" id="sec-orders">
+        <div class="card">
+          <div class="card-hd">
+            <div><span class="card-title">📦 My Orders</span></div>
+            <button class="btn btn-sm btn-outline" onclick="goSec('shop')">← Back to Shop</button>
+          </div>
+          <div id="orders-list"></div>
+        </div>
+      </div>
+
+      <!-- ════════════════════
+           SECTION: ADMIN PANEL
+      ════════════════════ -->
+      <div class="section" id="sec-admin">
+        <div class="stats-row" id="admin-stats"></div>
+        <div class="admin-tabs">
+          <div class="atab active" onclick="showAdminTab('users')" id="at-users">👥 Users</div>
+          <div class="atab" onclick="showAdminTab('plants')" id="at-plants">🌳 Plantations</div>
+          <div class="atab" onclick="showAdminTab('products')" id="at-products">🏪 Products</div>
+          <div class="atab" onclick="showAdminTab('weather')" id="at-weather">⛅ Weather</div>
+          <div class="atab" onclick="showAdminTab('orders')" id="at-orders">📦 Orders</div>
+          <div class="atab" onclick="showAdminTab('events')" id="at-events">📅 Events</div>
+          <div class="atab" onclick="showAdminTab('registrations')" id="at-registrations">📋 Registrations <span id="reg-count-badge" style="background:#e53935;color:#fff;font-size:.64rem;padding:1px 6px;border-radius:20px;margin-left:3px"></span></div>
+          <div class="atab" onclick="showAdminTab('feedback')" id="at-feedback">💬 Feedback</div>
+        </div>
+        <div id="admin-tab-content"></div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+  </div>
+</div><!-- /s-dash -->
+
+<!-- ════════════════════════════════
+     MODALS
+════════════════════════════════ -->
+
+<!-- Modal: Log Plantation -->
+<div class="overlay" id="m-plant">
+  <div class="modal">
+    <h2>🌱 Log New Plantation</h2>
+    <div class="fgroup"><label>Tree Name / Species</label><input class="finput" id="mp-name" placeholder="e.g. Neem, Banyan, Mango"></div>
+    <div class="grid2">
+      <div class="fgroup"><label>Mumbai Location / Ward</label>
+        <select class="finput" id="mp-loc">
+          <option value="">— Select Area —</option>
+          <option>Andheri</option><option>Bandra</option><option>Borivali</option>
+          <option>Chembur</option><option>Dadar</option><option>Dharavi</option>
+          <option>Ghatkopar</option><option>Goregaon</option><option>Juhu</option>
+          <option>Kandivali</option><option>Kurla</option><option>Malad</option>
+          <option>Mulund</option><option>Powai</option><option>Versova</option>
+          <option>Vikhroli</option><option>Worli</option><option>Sion</option>
+        </select>
+      </div>
+      <div class="fgroup"><label>Date Planted</label><input class="finput" type="date" id="mp-date"></div>
+    </div>
+    <div class="fgroup"><label>Growth Status</label>
+      <select class="finput" id="mp-status">
+        <option value="planted">Just Planted 🌱</option>
+        <option value="growing">Growing 🌿</option>
+        <option value="mature">Mature 🌳</option>
+      </select>
+    </div>
+    <div class="fgroup"><label>Notes (optional)</label><textarea class="finput" id="mp-note" placeholder="e.g. Near colony park, school drive…"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeM('m-plant')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePlant()">Save Tree 🌳</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Checkout -->
+<div class="overlay" id="m-checkout">
+  <div class="modal">
+    <h2>🛒 Confirm Your Order</h2>
+
+    <div class="co-section-title">📦 Order Summary</div>
+    <div id="co-summary" style="background:var(--g8);border-radius:var(--r-sm);padding:13px;margin-bottom:16px"></div>
+
+    <div class="co-section-title">📍 Delivery Details</div>
+    <div class="co-addr-notice">Please fill in your complete delivery address below.</div>
+
+    <div class="fgroup">
+      <label>Full Name <span class="co-req">*</span></label>
+      <input class="finput" id="co-name" placeholder="Enter recipient full name">
+    </div>
+    <div class="fgroup">
+      <label>Flat / House No. &amp; Building <span class="co-req">*</span></label>
+      <input class="finput" id="co-house" placeholder="e.g. Flat 4B, Sunshine Apartments">
+    </div>
+    <div class="fgroup">
+      <label>Area / Locality <span class="co-req">*</span></label>
+      <select class="finput" id="co-area">
+        <option value="">— Select Mumbai Area —</option>
+        <option>Andheri</option><option>Bandra</option><option>Borivali</option>
+        <option>Chembur</option><option>Dadar</option><option>Dharavi</option>
+        <option>Ghatkopar</option><option>Goregaon</option><option>Juhu</option>
+        <option>Kandivali</option><option>Kurla</option><option>Malad</option>
+        <option>Mulund</option><option>Powai</option><option>Thane (nearby)</option>
+        <option>Versova</option><option>Vikhroli</option><option>Worli</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="fgroup">
+      <label>Landmark <span style="font-size:.7rem;color:var(--txt3)">(optional)</span></label>
+      <input class="finput" id="co-landmark" placeholder="e.g. Near Juhu Post Office">
+    </div>
+    <div class="fgroup">
+      <label>Contact Phone <span class="co-req">*</span></label>
+      <input class="finput" type="tel" id="co-phone" placeholder="10-digit mobile number" maxlength="10">
+    </div>
+    <div class="fgroup">
+      <label>Payment Method</label>
+      <select class="finput" id="co-pay"><option value="cod">💵 Cash on Delivery</option></select>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeM('m-checkout')">Cancel</button>
+      <button class="btn btn-primary" onclick="placeOrder()">Place Order 🌿</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Admin Weather Update -->
+<div class="overlay" id="m-weather">
+  <div class="modal">
+    <h2>⛅ Update Mumbai Weather</h2>
+    <div class="fgroup"><label>Temperature (°C)</label><input class="finput" type="number" id="wm-temp" placeholder="e.g. 28"></div>
+    <div class="fgroup"><label>Condition</label>
+      <select class="finput" id="wm-cond">
+        <option value="sunny">☀️ Sunny</option><option value="cloudy">⛅ Partly Cloudy</option>
+        <option value="rain">🌧️ Rainy</option><option value="thunder">⛈️ Thunderstorm</option>
+        <option value="windy">💨 Windy</option><option value="haze">🌫️ Hazy</option>
+      </select>
+    </div>
+    <div class="grid2">
+      <div class="fgroup"><label>Humidity (%)</label><input class="finput" type="number" id="wm-hum"></div>
+      <div class="fgroup"><label>Wind Speed (km/h)</label><input class="finput" type="number" id="wm-wind"></div>
+    </div>
+    <div class="grid2">
+      <div class="fgroup"><label>AQI Value (0–500)</label><input class="finput" type="number" id="wm-aqi"></div>
+      <div class="fgroup"><label>UV Index (0–11)</label><input class="finput" type="number" id="wm-uv"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeM('m-weather')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveWeather()">Update ⛅</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Admin Add Event -->
+<div class="overlay" id="m-event">
+  <div class="modal">
+    <h2>📅 Add New Event</h2>
+    <div class="fgroup"><label>Event Title</label><input class="finput" id="ev-title" placeholder="e.g. Andheri Plantation Drive"></div>
+    <div class="fgroup"><label>Description</label><textarea class="finput" id="ev-desc" placeholder="Details about the event…"></textarea></div>
+    <div class="grid2">
+      <div class="fgroup"><label>Date</label><input class="finput" type="date" id="ev-date"></div>
+      <div class="fgroup"><label>Time</label><input class="finput" type="time" id="ev-time"></div>
+    </div>
+    <div class="grid2">
+      <div class="fgroup"><label>Mumbai Location</label>
+        <select class="finput" id="ev-loc">
+          <option>Andheri</option><option>Bandra</option><option>Borivali</option>
+          <option>Chembur</option><option>Dadar</option><option>Goregaon</option>
+          <option>Juhu Beach</option><option>Kandivali</option><option>Powai</option>
+          <option>Versova Beach</option><option>Worli Sea Face</option><option>Sanjay Gandhi NP</option>
+        </select>
+      </div>
+      <div class="fgroup"><label>Max Registrations</label><input class="finput" type="number" id="ev-max" placeholder="e.g. 50" min="1"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeM('m-event')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEvent()">Create Event 📅</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     JAVASCRIPT
+     Organised by page/section for easy reading
+════════════════════════════════════════════════════════ -->
+
+<script src="app.js"></script>
+</body>
+</html>
