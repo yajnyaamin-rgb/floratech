@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 Flask
 Flask-Cors
 mysql-connector-python
 python-dotenv
+=======
+Flask
+Flask-Cors
+mysql-connector-python
+python-dotenv
+>>>>>>> c32490cda96b67f80fda9bec79f473300dcf7193
 gunicorn
